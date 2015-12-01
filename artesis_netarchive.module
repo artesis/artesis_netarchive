@@ -1,0 +1,46 @@
+<?php
+/**
+ * @file artesis_netarchive.module
+ * Add link to archived pdf articles of Ting objects
+ */
+
+// Load Field module hooks.
+module_load_include('inc', 'artesis_netarchive', 'artesis_netarchive.field');
+
+/**
+ * Implements hook_menu().
+ */
+function artesis_netarchive_menu() {
+  $items = array();
+
+  $items['ting/netarchive'] = array(
+    'title' => 'Retreives netarchive for Ting objects',
+    'page callback' => 'artesis_netarchive_objects',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'artesis_netarchive.pages.inc',
+  );
+
+  $items['admin/config/ting/netarchive'] = array(
+    'title' => 'NetArchive',
+    'description' => 'Configure how netarchive is handled.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('artesis_netarchive_admin_settings_form'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'artesis_netarchive.admin.inc',
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function artesis_netarchive_theme() {
+  return array(
+    'artesis_netarchive_link_theme' => array(
+      'render element' => 'elements',
+      'file' => 'artesis_netarchive.theme.inc',
+    ),
+  );
+}
