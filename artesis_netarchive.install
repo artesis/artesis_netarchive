@@ -40,6 +40,19 @@ function artesis_netarchive_enable() {
     ),
   );
   field_create_instance($instance);
+
+  // Add netarchive link to the content group.
+  $groups = field_group_read_groups(
+    array(
+      'entity_type' => 'ting_object',
+      'bundle' => 'ting_object',
+      'view_mode' => 'search_result'
+    )
+  );
+
+  $group_content = $groups['ting_object']['ting_object']['search_result']['group_content'];
+  $group_content->children[] = 'artesis_netarchive_link';
+  field_group_group_save($group_content);
 }
 
 /**
