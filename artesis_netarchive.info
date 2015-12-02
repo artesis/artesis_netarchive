@@ -1,0 +1,9 @@
+name = Artesis NetArchive
+description = Add link to archived pdf articles of Ting objects
+core = 7.x
+package = Artesis
+dependencies[] = link
+
+files[] = lib/NetArchiveService.php
+
+configure = admin/config/ting/netarchive
