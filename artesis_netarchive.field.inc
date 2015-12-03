@@ -1,9 +1,8 @@
 <?php
 /**
  * @file
- *   Define netarchive link field.
+ * Define netarchive link field.
  */
-
 
 /**
  * Implements hook_field_info().
@@ -54,7 +53,7 @@ function artesis_netarchive_field_formatter_info() {
 }
 
 /**
-   * Implements hook_field_formatter_view().
+ * Implements hook_field_formatter_view().
  */
 function artesis_netarchive_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();

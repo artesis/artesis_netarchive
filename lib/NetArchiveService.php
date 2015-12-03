@@ -1,16 +1,28 @@
 <?php
 
 /**
- * Recieve netarchive data from service.
+ * @file
+ * Receive netarchive data from service.
  */
 
 class NetArchiveService {
-
   private $wsdlUrl;
   private $username;
   private $group;
   private $password;
 
+  /**
+   * Class constructor.
+   *
+   * @param $wsdlUrl
+   *   Service wsdl url.
+   * @param $username
+   *   Service access username.
+   * @param $group
+   *   Service access group.
+   * @param $password
+   *   Service access password.
+   */
   public function __construct($wsdlUrl, $username, $group, $password) {
     $this->wsdlUrl = $wsdlUrl;
     $this->username = $username;
@@ -18,6 +30,15 @@ class NetArchiveService {
     $this->password = $password;
   }
 
+  /**
+   * Get service link by faust number of the object.
+   *
+   * @param $faustNumber
+   *   Faust number of the object.
+   *
+   * @return array
+   *   Array of service links of the object.
+   */
   public function getByFaustNumber($faustNumber) {
     $identifiers = $this->collectIdentifiers('faust', $faustNumber);
 
@@ -26,11 +47,17 @@ class NetArchiveService {
     return $data;
   }
 
-  protected function collectIdentifiers($idName, $ids) {
-    if (!is_array($ids)) {
-      $ids = array($ids);
-    }
-
+  /**
+   * Get object by one of its params.
+   *
+   * @param $idName
+   *   Name of the parameter.
+   * @param array $ids
+   *   Array of parameters.
+   * @return array
+   *  Array of identifiers based on parameter and their names.
+   */
+  protected function collectIdentifiers($idName, array $ids) {
     $identifiers = array();
     foreach ($ids as $i) {
       $identifiers[] = array($idName => $i);
@@ -39,12 +66,15 @@ class NetArchiveService {
     return $identifiers;
   }
 
+  /**
+   * Send the request to service.
+   *
+   * @param $identifiers
+   *   Pass requested identifiers.
+   * @return mixed
+   *   Response object or error message.
+   */
   protected function sendRequest($identifiers) {
-    $ids = array();
-    foreach ($identifiers as $i) {
-      $ids = array_merge($ids, array_values($i));
-    }
-
     $authInfo = array(
       'authenticationUser' => $this->username,
       'authenticationGroup' => $this->group,
@@ -61,18 +91,28 @@ class NetArchiveService {
       );
     }
     catch (Exception $e) {
-      throw new Exception($e->getMessage());
+      watchdog_exception('artesis_netarchive' ,$e);
     }
 
     return $response;
   }
 
-  public function extractNetArchiveLink($response) {
+  /**
+   * Get array of netarchive links based on the object response from the service.
+   *
+   * @param \stdClass $response
+   *   Service object response.
+   * @return array
+   *   Array of netarchive links.
+   */
+  public function extractNetArchiveLink(stdClass $response) {
     $additionalInformations = array();
 
-    foreach ($response->identifierInformation as $info) {
-      if (isset($info->netArchive)) {
-        $additionalInformations[$info->identifier->faust] = $info->netArchive->_;
+    if (isset($response->identifierInformation) && is_array($response->identifierInformation)) {
+      foreach ($response->identifierInformation as $info) {
+        if (isset($info->netArchive)) {
+          $additionalInformations[$info->identifier->faust] = $info->netArchive->_;
+        }
       }
     }
 

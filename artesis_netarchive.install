@@ -1,9 +1,8 @@
 <?php
 /**
  * @file
- *   Perform functionality on module enable/distable.
+ * Perform functionality on module enable/distable.
  */
-
 
 /**
  * Implements hook_enable().
@@ -53,17 +52,4 @@ function artesis_netarchive_enable() {
   $group_content = $groups['ting_object']['ting_object']['search_result']['group_content'];
   $group_content->children[] = 'artesis_netarchive_link';
   field_group_group_save($group_content);
-}
-
-/**
- * Implements hook_disable().
- */
-function artesis_netarchive_disable() {
-  $instance = array(
-    'field_name' => 'artesis_netarchive_link',
-    'entity_type' => 'ting_object',
-    'bundle' => 'ting_object'
-  );
-  field_delete_instance($instance);
-  field_delete_field($instance['field_name']);
 }
