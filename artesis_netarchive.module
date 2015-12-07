@@ -1,7 +1,7 @@
 <?php
 /**
  * @file artesis_netarchive.module
- * Add link to archived pdf articles of Ting objects
+ * Add link to archived pdf articles of Ting objects.
  */
 
 // Load Field module hooks.

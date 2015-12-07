@@ -1,8 +1,7 @@
 <?php
-
 /**
  * @file
- *   Theme functions for DBC Web service link.
+ * Theme functions for DBC Web service link.
  */
 
 /**
@@ -22,7 +21,7 @@ function theme_artesis_netarchive_link_theme(&$variables) {
  * Add classes to netarchive link to trigger them from js.
  *
  * @param $variables
- *   Ting objec entity.
+ *   Ting object entity.
  */
 function template_preprocess_artesis_netarchive_link_theme(&$variables) {
   $object = $variables['object'] = $variables['elements']['#object'];

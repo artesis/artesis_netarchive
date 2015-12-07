@@ -22,28 +22,14 @@
      var netArchiveData = [];
 
       $('.artesis-netarchive', context).each(function(i, e) {
-        var netarchvie_id = Drupal.extractNetArchive(e);
-        if (netarchvie_id) {
-          netArchiveData.push(netarchvie_id);
+        var netarchive_id = Drupal.extractNetArchive(e);
+        if (netarchive_id) {
+          netArchiveData.push(netarchive_id);
         }
       });
 
-      request = $.ajax({
-        url: '/ting/netarchive',
-        type: 'POST',
-        data:{
-          netArchiveData: netArchiveData
-        },
-        dataType: 'json',
-        success: Drupal.insertNetArchive
-      });
-    },
-    detach: function(context) {
-      //If we have a request associated with the context then abort it.
-      //It is obsolete.
-      var request = $(context).data('request');
-      if (request) {
-        request.abort();
+      if (netArchiveData.length > 0) {
+        $.getJSON(Drupal.settings.basePath + 'ting/netarchive/' + netArchiveData.join(','), {}, Drupal.insertNetArchive);
       }
     }
   };
