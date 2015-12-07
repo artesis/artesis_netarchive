@@ -4,6 +4,7 @@ core = 7.x
 package = Artesis
 dependencies[] = ding_ting_frontend
 dependencies[] = link
+version = 7.x-2.4
 
 files[] = lib/NetArchiveService.php
 
