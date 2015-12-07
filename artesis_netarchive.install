@@ -1,0 +1,55 @@
+<?php
+/**
+ * @file
+ * Perform functionality on module enable/distable.
+ */
+
+/**
+ * Implements hook_enable().
+ */
+function artesis_netarchive_enable() {
+  // Associate created field before creating it.
+  field_cache_clear();
+  field_associate_fields('artesis_netarchive_link');
+
+  if (field_info_field('artesis_netarchive_link')) {
+    return;
+  }
+
+  $field = array(
+    'field_name' => 'artesis_netarchive_link',
+    'type' => 'netarchive_link',
+  );
+  field_create_field($field);
+
+  $instance = array(
+    'field_name' => $field['field_name'],
+    'label' => t('NetArchive link'),
+    'entity_type' => 'ting_object',
+    'bundle' => 'ting_object',
+    'widget' => array(
+      'type'    => 'hidden',
+    ),
+    'display' => array(
+      'search_result' => array(
+        'label' => 'hidden',
+        'type' => 'link_field',
+        'weight' => 21,
+      ),
+    ),
+  );
+  field_create_instance($instance);
+
+  // Add netarchive link to the content group.
+  $groups = field_group_read_groups(
+    array(
+      'entity_type' => 'ting_object',
+      'bundle' => 'ting_object',
+      'view_mode' => 'search_result'
+    )
+  );
+
+  $group_content = $groups['ting_object']['ting_object']['search_result']['group_content'];
+  $group_content->children[] = 'artesis_netarchive_link';
+  field_group_group_save($group_content);
+}
