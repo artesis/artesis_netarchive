@@ -21,15 +21,6 @@ function artesis_netarchive_menu() {
     'file' => 'artesis_netarchive.pages.inc',
   );
 
-  $items['admin/config/ting/netarchive'] = array(
-    'title' => 'NetArchive',
-    'description' => 'Configure how netarchive is handled.',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('artesis_netarchive_admin_settings_form'),
-    'access arguments' => array('administer site configuration'),
-    'type' => MENU_NORMAL_ITEM,
-    'file' => 'artesis_netarchive.admin.inc',
-  );
   return $items;
 }
 
