@@ -57,4 +57,7 @@ function artesis_netarchive_enable() {
   $group_content = $groups['ting_object']['ting_object']['search_result']['group_content'];
   $group_content->children[] = 'artesis_netarchive_link';
   field_group_group_save($group_content);
+
+  // Clear ting_object cache.
+  cache_clear_all("field:ting_object:*", 'cache_field');
 }
