@@ -107,11 +107,18 @@ class NetArchiveService {
    */
   public function extractNetArchiveLink(stdClass $response) {
     $additionalInformations = array();
+    if (isset($response->identifierInformation)) {
+      $identifiers = $response->identifierInformation;
 
-    if (isset($response->identifierInformation) && is_array($response->identifierInformation)) {
-      foreach ($response->identifierInformation as $info) {
-        if (isset($info->netArchive)) {
-          $additionalInformations[$info->identifier->faust] = $info->netArchive->_;
+      // If response has only one element, convert it to array.
+      if (!is_array($response->identifierInformation)) {
+        $identifiers = array($response->identifierInformation);
+      }
+      foreach ($identifiers as $info) {
+        $identifier = $info->identifier;
+        $netarchive = $info->netArchive;
+        if (isset($netarchive)) {
+          $additionalInformations[$identifier->faust] = $netarchive->_;
         }
       }
     }

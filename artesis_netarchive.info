@@ -1,11 +1,15 @@
 name = Artesis NetArchive
-description = Add link to archived pdf articles of Ting objects
+description = Add link to archived pdf articles of Ting objects, it uses ting_covers moreinfo service.
 core = 7.x
 package = Artesis
 dependencies[] = ding_ting_frontend
+dependencies[] = ctools
+dependencies[] = features
 dependencies[] = link
+dependencies[] = virtual_field
+dependencies[] = ting_covers
 version = 7.x-2.4
 
 files[] = lib/NetArchiveService.php
 
-configure = admin/config/ting/netarchive
+configure = admin/config/ting/covers/addi
