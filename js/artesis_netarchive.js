@@ -20,16 +20,14 @@
   Drupal.behaviors.netarchive = {
     attach: function(context) {
      var netArchiveData = [];
-
       $('.artesis-netarchive', context).each(function(i, e) {
         var netarchive_id = Drupal.extractNetArchive(e);
         if (netarchive_id) {
           netArchiveData.push(netarchive_id);
         }
       });
-
       if (netArchiveData.length > 0) {
-        $.getJSON(Drupal.settings.basePath + 'ting/netarchive/' + netArchiveData.join(','), {}, Drupal.insertNetArchive);
+        $.getJSON(Drupal.settings.basePath + 'ting/netarchive/' + netArchiveData.join(','), {netarchive_data: netArchiveData}, Drupal.insertNetArchive);
       }
     }
   };

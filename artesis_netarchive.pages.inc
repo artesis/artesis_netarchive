@@ -27,10 +27,10 @@ function _artesis_netarchive_objects($ids) {
   $pdfs = array();
 
   try {
-    $netarchive_url = variable_get('netarchive_wsdl_url', '');
-    $netarchive_username = variable_get('netarchive_username', '');
-    $netarchive_group = variable_get('netarchive_group', '');
-    $netarchive_password = variable_get('netarchive_password', '');
+    $netarchive_url = variable_get('addi_wsdl_url', '');
+    $netarchive_username = variable_get('addi_username', '');
+    $netarchive_group = variable_get('addi_group', '');
+    $netarchive_password = variable_get('addi_password', '');
 
     $service = new NetArchiveService($netarchive_url, $netarchive_username, $netarchive_group, $netarchive_password);
     $pdfs = $service->getByFaustNumber($ids);
