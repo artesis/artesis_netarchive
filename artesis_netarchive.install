@@ -34,7 +34,7 @@ function artesis_netarchive_enable() {
       'default' => array(
         'label' => 'hidden',
         'type' => 'link_field',
-        'weight' => 3,
+        'weight' => 2,
       ),
       'search_result' => array(
         'label' => 'hidden',
