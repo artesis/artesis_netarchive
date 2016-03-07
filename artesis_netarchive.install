@@ -10,25 +10,36 @@
 function artesis_netarchive_enable() {
   // Associate created field before creating it.
   field_cache_clear();
-  field_associate_fields('artesis_netarchive_link');
+  $field_name = 'netarchive_link';
+  field_associate_fields($field_name);
 
-  if (field_info_field('artesis_netarchive_link')) {
+  if (field_info_field($field_name)) {
     return;
   }
 
   $field = array(
-    'field_name' => 'artesis_netarchive_link',
-    'type' => 'netarchive_link',
+    'field_name' => $field_name,
+    'type' => $field_name,
+    'locked' => FALSE,
+    'default_widget' => 'hidden',
+    'no_ui' => TRUE,
+    'entity_types' => array('ting_object'),
+    'storage' => array(
+      'type' => 'virtual_field',
+    ),
   );
   field_create_field($field);
 
   $instance = array(
-    'field_name' => $field['field_name'],
+    'field_name' => $field_name,
     'label' => t('NetArchive link'),
     'entity_type' => 'ting_object',
     'bundle' => 'ting_object',
+    'settings' => array(
+      'text_processing' => FALSE,
+    ),
     'widget' => array(
-      'type'    => 'hidden',
+      'type' => 'hidden',
     ),
     'display' => array(
       'default' => array(
