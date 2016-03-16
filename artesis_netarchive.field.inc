@@ -12,9 +12,11 @@ function artesis_netarchive_field_info() {
     'netarchive_link' => array(
       'label' => t('NetArchive Link'),
       'description' => t('NetArchive link to the PDF file from the moreinfo service, if any.'),
-      'default_widget' => 'link_field',
-      'default_formatter' => 'netarchive_link_default',
-      'no_ui' => TRUE,
+      'default_widget' => 'hidden',
+      'default_formatter' => 'link_default',
+      'storage' => array(
+        'type' => 'virtual_field',
+      ),
     ),
   );
 }
@@ -31,25 +33,23 @@ function artesis_netarchive_field_load($entity_type, $entities, $field, $instanc
 }
 
 /**
- * Implements hook_widget_info_alter().
+ * Implements hook_field_widget_info_alter().
  */
-function artesis_netarchive_widget_info_alter(&$info) {
-  if (isset($info['link_field'])) {
-    $info['link_field']['field types'][] = 'netarchive_links';
+function artesis_netarchive_field_widget_info_alter(&$info) {
+  if (isset($info['hidden'])) {
+    $info['hidden']['field types'][] = 'netarchive_link';
   }
 }
 
 /**
- * Implements hook_field_formatter_info().
+ * Implements hook_field_formatter_info_alter().
  */
-function artesis_netarchive_field_formatter_info() {
-  return array(
-    'netarchive_link_default' => array(
-      'label' => t('Default'),
-      'description' => t('NetArchive Link default.'),
-      'field types' => array('netarchive_link'),
-    ),
-  );
+function artesis_netarchive_field_formatter_info_alter(&$info) {
+  if (isset($info['link_default'])) {
+    $info['link_default']['field types'][] = 'netarchive_link';
+    // Point formatter for the artesis netarchive module.
+    $info['link_default']['module'] = 'artesis_netarchive';
+  }
 }
 
 /**
@@ -58,9 +58,8 @@ function artesis_netarchive_field_formatter_info() {
 function artesis_netarchive_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
   $path = drupal_get_path('module', 'artesis_netarchive');
-
   switch ($field['field_name']) {
-    case 'artesis_netarchive_link':
+    case 'netarchive_link':
       foreach ($items as $delta => $item) {
         $element[$delta] = array(
           '#theme' => 'artesis_netarchive_link_theme',

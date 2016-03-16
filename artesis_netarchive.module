@@ -1,6 +1,6 @@
 <?php
 /**
- * @file artesis_netarchive.module
+ * @file
  * Add link to archived pdf articles of Ting objects.
  */
 
