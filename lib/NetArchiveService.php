@@ -91,7 +91,7 @@ class NetArchiveService {
       );
     }
     catch (Exception $e) {
-      watchdog_exception('artesis_netarchive' ,$e);
+      watchdog_exception('artesis_netarchive', $e);
     }
 
     return $response;
