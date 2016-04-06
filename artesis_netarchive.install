@@ -66,7 +66,28 @@ function artesis_netarchive_enable() {
   );
 
   $group_content = $groups['ting_object']['ting_object']['search_result']['group_content'];
-  $group_content->children[] = 'artesis_netarchive_link';
+  $group_content->children[] = 'netarchive_link';
+  field_group_group_save($group_content);
+
+  // Clear ting_object cache.
+  cache_clear_all("field:ting_object:*", 'cache_field', TRUE);
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function artesis_netarchive_update_7001() {
+  // Add netarchive link to the content group.
+  $groups = field_group_read_groups(
+    array(
+      'entity_type' => 'ting_object',
+      'bundle' => 'ting_object',
+      'view_mode' => 'search_result'
+    )
+  );
+
+  $group_content = $groups['ting_object']['ting_object']['search_result']['group_content'];
+  $group_content->children[] = 'netarchive_link';
   field_group_group_save($group_content);
 
   // Clear ting_object cache.
