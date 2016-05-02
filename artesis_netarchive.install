@@ -20,20 +20,20 @@ function artesis_netarchive_enable() {
   $field = array(
     'field_name' => $field_name,
     'type' => $field_name,
-    'locked' => FALSE,
-    'default_widget' => 'hidden',
-    'no_ui' => TRUE,
-    'entity_types' => array('ting_object'),
-    'storage' => array(
-      'type' => 'virtual_field',
-    ),
+    //'locked' => FALSE,
+    //'default_widget' => 'hidden',
+    //'no_ui' => TRUE,
+    //'entity_types' => array('ting_object'),
+    //'storage' => array(
+    //  'type' => 'virtual_field',
+    //),
   );
   field_create_field($field);
 
   $instance = array(
     'field_name' => $field_name,
-    'label' => t('NetArchive link'),
     'entity_type' => 'ting_object',
+    'label' => t('NetArchive link'),
     'bundle' => 'ting_object',
     'settings' => array(
       'text_processing' => FALSE,
