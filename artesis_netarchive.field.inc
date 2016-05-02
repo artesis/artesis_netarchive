@@ -14,9 +14,9 @@ function artesis_netarchive_field_info() {
       'description' => t('NetArchive link to the PDF file from the moreinfo service, if any.'),
       'default_widget' => 'hidden',
       'default_formatter' => 'link_default',
-      // Make field virtual.
       'virtual_field' => array(
-        'entity_types' => array(),
+        'entity_types' => array('ting_object'),
+        'add_widget' => TRUE,
       ),
     ),
   );
@@ -30,15 +30,6 @@ function artesis_netarchive_field_load($entity_type, $entities, $field, $instanc
     $items[$id][0] = array(
       'local_id' => $entity->getLocalId(),
     );
-  }
-}
-
-/**
- * Implements hook_field_widget_info_alter().
- */
-function artesis_netarchive_field_widget_info_alter(&$info) {
-  if (isset($info['hidden'])) {
-    $info['hidden']['field types'][] = 'netarchive_link';
   }
 }
 
