@@ -14,8 +14,9 @@ function artesis_netarchive_field_info() {
       'description' => t('NetArchive link to the PDF file from the moreinfo service, if any.'),
       'default_widget' => 'hidden',
       'default_formatter' => 'link_default',
-      'storage' => array(
-        'type' => 'virtual_field',
+      // Make field virtual.
+      'virtual_field' => array(
+        'entity_types' => array(),
       ),
     ),
   );
@@ -73,4 +74,11 @@ function artesis_netarchive_field_formatter_view($entity_type, $entity, $field, 
   }
 
   return $element;
+}
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function artesis_netarchive_field_is_empty($item, $field) {
+  return empty($item['value']);
 }
