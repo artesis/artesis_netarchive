@@ -20,13 +20,6 @@ function artesis_netarchive_enable() {
   $field = array(
     'field_name' => $field_name,
     'type' => $field_name,
-    //'locked' => FALSE,
-    //'default_widget' => 'hidden',
-    //'no_ui' => TRUE,
-    //'entity_types' => array('ting_object'),
-    //'storage' => array(
-    //  'type' => 'virtual_field',
-    //),
   );
   field_create_field($field);
 
