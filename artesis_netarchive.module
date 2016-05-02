@@ -21,13 +21,6 @@ function artesis_netarchive_menu() {
     'file' => 'artesis_netarchive.pages.inc',
   );
 
-  $items['netarchive'] = array(
-    'title' => 'Create Netarchive field.',
-    'page callback' => 'artesis_netarchive_new_field',
-    'access arguments' => array('access content'),
-    'type' => MENU_CALLBACK,
-  );
-
   return $items;
 }
 
@@ -41,8 +34,4 @@ function artesis_netarchive_theme() {
       'file' => 'artesis_netarchive.theme.inc',
     ),
   );
-}
-
-function artesis_netarchive_new_field() {
-
 }
