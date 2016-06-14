@@ -66,6 +66,27 @@ function artesis_netarchive_create_field() {
   $group_content->children[] = 'netarchive_link';
   field_group_group_save($group_content);
 
+  // Add field to group.
+  $query = db_select('field_group', 'fg');
+  $query->condition('group_name', 'group_content')
+    ->condition('entity_type', 'ting_object')
+    ->condition('mode', 'search_result')
+    ->fields('fg', array('id', 'data'));
+
+  $result = $query->execute()->fetchAssoc();
+
+  $config = unserialize($result['data']);
+
+  if (!in_array('netarchive_link', $config['children'])) {
+    $config['children'][] = 'netarchive_link';
+    $config = serialize($config);
+
+    db_update('field_group')
+      ->fields(array('data' => $config))
+      ->condition('id', $result->id, '=')
+      ->execute();
+  }
+
   // Clear ting_object cache.
   cache_clear_all("field:ting_object:*", 'cache_field', TRUE);
 }
