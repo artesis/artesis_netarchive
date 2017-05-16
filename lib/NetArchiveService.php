@@ -118,7 +118,13 @@ class NetArchiveService {
         $identifier = $info->identifier;
         $netarchive = $info->netArchive;
         if (isset($netarchive)) {
-          $additionalInformations[$identifier->faust] = $netarchive->_;
+          if (is_array($netarchive)) {
+            $link = $netarchive[0]->_;
+          }
+          else {
+            $link = $netarchive->_;
+          }
+          $additionalInformations[$identifier->faust] = $link;
         }
       }
     }
