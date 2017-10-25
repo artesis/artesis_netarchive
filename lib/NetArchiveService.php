@@ -80,7 +80,7 @@ class NetArchiveService {
       'authenticationGroup' => $this->group,
       'authenticationPassword' => $this->password,
     );
-    $client = new SoapClient($this->wsdlUrl);
+    $client = new SoapClient($this->wsdlUrl . '/?wsdl');
 
     try {
       $response = $client->moreInfo(
