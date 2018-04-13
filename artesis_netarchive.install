@@ -47,7 +47,7 @@ function artesis_netarchive_create_field() {
       'search_result' => array(
         'label' => 'hidden',
         'type' => 'link_field',
-        'weight' => 21,
+        'weight' => 20,
       ),
     ),
   );
@@ -92,10 +92,10 @@ function artesis_netarchive_create_field() {
 }
 
 /**
- * Move netarchive link to group_content.
+ * Recreate netarchive_link field.
  */
-function artesis_netarchive_update_7002() {
-  $instance_info = field_info_instance('ting_object', 'artesis_netarchive_link', 'ting_object');
+function artesis_netarchive_recreate_field() {
+  $instance_info = field_info_instance('ting_object', 'netarchive_link', 'ting_object');
 
   field_delete_instance($instance_info);
 
@@ -103,4 +103,18 @@ function artesis_netarchive_update_7002() {
 
   // Clear ting_object cache.
   cache_clear_all("field:ting_object:*", 'cache_field', TRUE);
+}
+
+/**
+ * Move netarchive link to group_content.
+ */
+function artesis_netarchive_update_7002() {
+  artesis_netarchive_recreate_field();
+}
+
+/**
+ * Place field into correct position with correct weight.
+ */
+function artesis_netarchive_update_7003() {
+  artesis_netarchive_recreate_field();
 }
