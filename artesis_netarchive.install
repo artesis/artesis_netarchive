@@ -11,6 +11,11 @@ function artesis_netarchive_enable() {
   artesis_netarchive_create_field();
 }
 
+/**
+ * Create netarchive field.
+ *
+ * @throws \FieldException
+ */
 function artesis_netarchive_create_field() {
   // Associate created field before creating it.
   field_cache_clear();
@@ -20,6 +25,9 @@ function artesis_netarchive_create_field() {
   if (field_info_field($field_name)) {
     return;
   }
+
+  $ding_entity_buttons_instance = field_info_instance('ting_object', 'ding_entity_buttons', 'ting_object');
+  $netarchive_link_weight = $ding_entity_buttons_instance['display']['search_result']['weight'] - 1;
 
   $field = array(
     'field_name' => $field_name,
@@ -47,7 +55,7 @@ function artesis_netarchive_create_field() {
       'search_result' => array(
         'label' => 'hidden',
         'type' => 'link_field',
-        'weight' => 20,
+        'weight' => $netarchive_link_weight,
       ),
     ),
   );
@@ -58,12 +66,13 @@ function artesis_netarchive_create_field() {
     array(
       'entity_type' => 'ting_object',
       'bundle' => 'ting_object',
-      'view_mode' => 'search_result'
+      'view_mode' => 'search_result',
     )
   );
 
   $group_content = $groups['ting_object']['ting_object']['search_result']['group_content'];
-  $group_content->children[] = 'netarchive_link';
+  $buttons_weight = array_search('ding_entity_buttons', $group_content->children);
+  array_splice($group_content->children, $buttons_weight, 0, 'netarchive_link');
   field_group_group_save($group_content);
 
   // Add field to group.
