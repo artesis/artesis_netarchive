@@ -132,3 +132,10 @@ function artesis_netarchive_update_7002() {
 function artesis_netarchive_update_7003() {
   artesis_netarchive_recreate_field();
 }
+
+/**
+ * Place field into correct position with correct weight.
+ */
+function artesis_netarchive_update_7004() {
+  artesis_netarchive_recreate_field();
+}
