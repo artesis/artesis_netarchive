@@ -71,6 +71,11 @@ function artesis_netarchive_create_field() {
   );
 
   $group_content = $groups['ting_object']['ting_object']['search_result']['group_content'];
+  $group_view = field_group_info_groups('ting_object', 'ting_object', 'search_result');
+  if (empty($group_content)) {
+    $group_content = $group_view['group_content'];
+  }
+
   $buttons_weight = array_search('ding_entity_buttons', $group_content->children);
   array_splice($group_content->children, $buttons_weight, 0, 'netarchive_link');
   field_group_group_save($group_content);
@@ -91,7 +96,7 @@ function artesis_netarchive_create_field() {
     $config = serialize($config);
 
     db_update('field_group')
-      ->fields(array('data' => $config))
+      ->fields(['data' => $config])
       ->condition('id', $result->id, '=')
       ->execute();
   }
@@ -125,5 +130,12 @@ function artesis_netarchive_update_7002() {
  * Place field into correct position with correct weight.
  */
 function artesis_netarchive_update_7003() {
+  artesis_netarchive_recreate_field();
+}
+
+/**
+ * Place field into correct position with correct weight.
+ */
+function artesis_netarchive_update_7004() {
   artesis_netarchive_recreate_field();
 }
