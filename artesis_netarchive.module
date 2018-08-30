@@ -35,3 +35,38 @@ function artesis_netarchive_theme() {
     ),
   );
 }
+
+/**
+ * Implements hook_preprocess_ting_object().
+ *
+ * Force the field to appear above the ding_entity_buttons.
+ */
+function artesis_netarchive_preprocess_ting_object(&$variables) {
+  // Dive in only for 'search_result' view mode.
+  if ('search_result' !== $variables['elements']['#view_mode']) {
+    return;
+  }
+
+  $content = &$variables['content'];
+
+  $buttons_position = array_search(
+    'ding_entity_buttons',
+    array_keys($content['group_content'])
+  );
+  // Do nothing if the 'ding_entity_buttons' field is not found in the
+  // 'group_content' fieldgroup or the 'netarchive_link' field is
+  // hidden or assigned to another group via field ui.
+  if (FALSE === $buttons_position || empty($content['netarchive_link'])) {
+    return;
+  }
+
+  // Hacky way to override field ui settings and force the field to appear
+  // above the entity buttons.
+  $netarchive_field = $content['netarchive_link'];
+  unset($content['netarchive_link']);
+  // Since 'array_splice' fails to insert items on N-th position for
+  // associative arrays, use this approach.
+  $content['group_content'] = array_slice($content['group_content'], 0 , $buttons_position, TRUE) +
+    ['netarchive_link' => $netarchive_field] +
+    array_slice($content['group_content'], $buttons_position, NULL, TRUE);
+}
