@@ -8,7 +8,7 @@ dependencies[] = features
 dependencies[] = link
 dependencies[] = virtual_field
 dependencies[] = ting_covers
-version = 7.x-3.7
+version = 7.x-3.8
 
 files[] = lib/NetArchiveService.php
 
