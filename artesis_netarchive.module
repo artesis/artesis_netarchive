@@ -49,6 +49,10 @@ function artesis_netarchive_preprocess_ting_object(&$variables) {
 
   $content = &$variables['content'];
 
+  if (empty($content['group_content'])) {
+    return;
+  }
+
   $buttons_position = array_search(
     'ding_entity_buttons',
     array_keys($content['group_content'])
