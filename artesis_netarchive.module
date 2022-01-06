@@ -61,7 +61,7 @@ function artesis_netarchive_preprocess_ting_object(&$variables) {
 
   // There are two keys, which are references to same object: #groups and #fieldgroups.
   // Populating #groups will populate #fieldgroups as well.
-  if (!array_key_exists('netarchive_link', $elements['#groups']['group_content']->children)) {
+  if (!in_array('netarchive_link', $elements['#groups']['group_content']->children)) {
     $elements['#groups']['group_content']->children[] = 'netarchive_link';
   }
 
