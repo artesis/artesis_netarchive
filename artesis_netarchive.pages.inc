@@ -1,9 +1,9 @@
 <?php
+
 /**
  * @file
  * Perform request for the netarchive links to the service.
  */
-
 
 /**
  * Pass array of pdf links to js processing.
@@ -17,14 +17,16 @@ function artesis_netarchive_objects($netarchive_data) {
 }
 
 /**
- * @param $post
+ * Request data from Netarchive Service.
+ *
+ * @param array $ids
  *   Array of ting object ids.
  *
  * @return array
  *   Array of links to web service.
  */
 function _artesis_netarchive_objects($ids) {
-  $pdfs = array();
+  $pdfs = [];
 
   try {
     $netarchive_url = variable_get('addi_wsdl_url', '');
@@ -36,7 +38,7 @@ function _artesis_netarchive_objects($ids) {
     $pdfs = $service->getByFaustNumber($ids);
   }
   catch (Exception $e) {
-    watchdog_exception('artesis_netarchive', 'Unable to retrieve pdf from MoreInfo: %message', array('%message' => $e->getMessage()));
+    watchdog_exception('artesis_netarchive', $e, 'Unable to retrieve pdf from MoreInfo: %message', ['%message' => $e->getMessage()]);
   }
 
   return $pdfs;
